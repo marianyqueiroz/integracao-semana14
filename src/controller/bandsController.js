@@ -1,8 +1,8 @@
-const bands = require("../model/bands.js");
+const bands = require("../model/bands");
 
 const getAll = (req, res) => {
     bands.find(function (err, bands) {
-        if(err) {
+        if (err) {
             res.status(500).send({ message: err.message });
         } else {
             res.status(200).send(bands);
@@ -11,15 +11,16 @@ const getAll = (req, res) => {
 };
 
 const postBands = (req, res) => {
-    let bands = new bands(req.body);
-    bands.save(function(err) {
+    let band = new bands(req.body);
+
+    band.save(function(err){
         if (err) {
             res.status(500).send({ message: err.message });
         } else {
-            res.status(201).send({ message: "Band successfully included!" });
+            res.status(201).send({ message : "Band successfully included!"});
         };
     });
-}
+};
 
 module.exports = {
     getAll,
