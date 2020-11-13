@@ -22,7 +22,31 @@ const postBands = (req, res) => {
     });
 };
 
+const deleteBand = (req, res) => {
+    const parametros = req.query
+    bands.deleteOne(parametros, function(err){
+        if (err) {
+            res.status(500).send({ message: err.message })
+        } else {
+            res.status(200).send({ message : "Band successfully removed"})
+        }
+    })
+}
+
+const putBand = (req, res) => {
+    const id = req.params.id
+    bands.updateMany({ id }, { $set : req.body }, { upsert : true }, function(err){
+        if (err) {
+            res.status(500).send({ message: err.message });
+        } else {
+            res.status(200).send({ message : "Band updated successfully"});
+        };
+    });
+};
+
 module.exports = {
     getAll,
-    postBands
+    postBands,
+    putBand,
+    deleteBand
 };
